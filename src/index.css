@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply antialiased text-slate-800;
+  /* 防止移动端橡皮筋滚动时露出难看的背景 */
+  overscroll-behavior-y: none;
+}
+
+/* 隐藏滚动条但保留滚动能力，结果页截图更干净 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
