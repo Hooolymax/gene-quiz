@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { questions } from '../data/questions';
+import { useLocale } from '../i18n/LocaleContext';
+import { strings } from '../i18n/strings';
 import type { Answers } from '../types/quiz';
 import ProgressBar from './ProgressBar';
 import OptionCard from './OptionCard';
+import LanguageToggle from './LanguageToggle';
 
 interface QuizPageProps {
   /** 进入答题时已有的答案（支持从结果页返回继续/重测） */
@@ -20,6 +23,7 @@ const ADVANCE_DELAY = 220;
  * 答题页 —— 一次一题、显示进度、可返回上一题修改答案。
  */
 export default function QuizPage({ initialAnswers, onComplete, onExit }: QuizPageProps) {
+  const { t } = useLocale();
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Answers>(initialAnswers);
 
@@ -52,25 +56,26 @@ export default function QuizPage({ initialAnswers, onComplete, onExit }: QuizPag
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-slate-50 px-5 pb-8 pt-6">
-      {/* 顶部：返回 + 进度 */}
+      {/* 顶部：返回 + 进度 + 语言切换 */}
       <div className="mb-6 flex items-center gap-3">
         <button
           type="button"
           onClick={handleBack}
           className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-white text-slate-500 shadow-sm transition hover:bg-slate-100 active:scale-95"
-          aria-label="上一题"
+          aria-label={t(strings.backAria)}
         >
           ←
         </button>
         <div className="flex-1">
           <ProgressBar current={current + 1} total={total} />
         </div>
+        <LanguageToggle variant="light" />
       </div>
 
       {/* 题干 */}
-      <div key={question.id} className="animate-fade-in-up">
+      <div key={`${question.id}`} className="animate-fade-in-up">
         <h2 className="mb-6 text-xl font-bold leading-snug text-slate-900">
-          {question.title}
+          {t(question.title)}
         </h2>
 
         {/* 选项 */}
@@ -79,7 +84,7 @@ export default function QuizPage({ initialAnswers, onComplete, onExit }: QuizPag
             <OptionCard
               key={option.id}
               index={index}
-              text={option.text}
+              text={t(option.text)}
               selected={selectedId === option.id}
               onClick={() => handleSelect(option.id)}
             />
@@ -89,7 +94,7 @@ export default function QuizPage({ initialAnswers, onComplete, onExit }: QuizPag
 
       {/* 底部提示 */}
       <p className="mt-auto pt-8 text-center text-xs text-slate-400">
-        选择后自动进入下一题，可点左上角返回修改
+        {t(strings.quizHint)}
       </p>
     </div>
   );

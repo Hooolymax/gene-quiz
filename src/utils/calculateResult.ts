@@ -6,18 +6,18 @@ import type { Answers, Axis, DimensionKey, PersonalityResult, ScoreTotals } from
  * 计分系统
  * ----------------------------------------------------------------------------
  * 4 组对立维度轴。顺序决定最终 4 位代码里字母的位置：
- *   第 1 位 A/E ｜ 第 2 位 R/S ｜ 第 3 位 T/F ｜ 第 4 位 C/I
+ *   第 1 位 P/R ｜ 第 2 位 S/B ｜ 第 3 位 A/N ｜ 第 4 位 T/C
  */
 export const AXES: Axis[] = [
-  { left: 'A', right: 'E' }, // 爆发力 vs 耐力
-  { left: 'R', right: 'S' }, // 挑战   vs 稳健
-  { left: 'T', right: 'F' }, // 技术   vs 感觉
-  { left: 'C', right: 'I' }, // 竞技   vs 自我
+  { left: 'P', right: 'R' }, // 表现驱动 vs 恢复修复
+  { left: 'S', right: 'B' }, // 皮肤状态 vs 身体代谢
+  { left: 'A', right: 'N' }, // 主动管理 vs 自然随缘
+  { left: 'T', right: 'C' }, // 科技检测 vs 日常护理
 ];
 
 /** 初始化一份全 0 的维度得分表 */
 function emptyTotals(): ScoreTotals {
-  return { A: 0, E: 0, R: 0, S: 0, T: 0, F: 0, C: 0, I: 0 };
+  return { P: 0, R: 0, S: 0, B: 0, A: 0, N: 0, T: 0, C: 0 };
 }
 
 /**

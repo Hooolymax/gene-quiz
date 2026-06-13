@@ -24,16 +24,16 @@ export default function OptionCard({ index, text, selected, onClick }: OptionCar
         'group flex w-full items-center gap-3 rounded-2xl border px-4 py-4 text-left transition-all duration-200',
         'active:scale-[0.98]',
         selected
-          ? 'border-indigo-500 bg-indigo-50 shadow-md ring-2 ring-indigo-500/30'
-          : 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-indigo-50/40 hover:shadow-sm',
+          ? 'border-teal-500 bg-teal-50 shadow-md ring-2 ring-teal-500/30'
+          : 'border-slate-200 bg-white hover:border-teal-300 hover:bg-teal-50/40 hover:shadow-sm',
       ].join(' ')}
     >
       <span
         className={[
           'flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors',
           selected
-            ? 'bg-indigo-500 text-white'
-            : 'bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600',
+            ? 'bg-teal-500 text-white'
+            : 'bg-slate-100 text-slate-500 group-hover:bg-teal-100 group-hover:text-teal-600',
         ].join(' ')}
       >
         {LETTERS[index] ?? index + 1}
@@ -41,7 +41,7 @@ export default function OptionCard({ index, text, selected, onClick }: OptionCar
       <span
         className={[
           'text-[15px] leading-snug',
-          selected ? 'font-semibold text-indigo-900' : 'text-slate-700',
+          selected ? 'font-semibold text-teal-900' : 'text-slate-700',
         ].join(' ')}
       >
         {text}
