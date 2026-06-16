@@ -108,7 +108,7 @@ export const appConfig = {
       gradient: 'from-cyan-500 to-teal-500',
     },
     {
-      emoji: '🤖',
+      emoji: '✨',
       label: { zh: '体验 AI Genetic Consultant', en: 'Try AI Genetic Consultant' } as Localized,
       href: 'https://www.e-ai.ca/',
       gradient: 'from-fuchsia-500 to-pink-500',
