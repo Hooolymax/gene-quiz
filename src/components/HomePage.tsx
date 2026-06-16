@@ -1,6 +1,8 @@
 import { appConfig } from '../data/appConfig';
+import { results } from '../data/results';
 import { useLocale } from '../i18n/LocaleContext';
-import LanguageToggle from './LanguageToggle';
+import TopBanner from './TopBanner';
+import SiteFooter from './SiteFooter';
 
 interface HomePageProps {
   /** 点击「开始测试」回调 */
@@ -8,55 +10,58 @@ interface HomePageProps {
 }
 
 /**
- * 首页 —— health-tech 浅色玻璃拟态主题：浅蓝绿渐变背景 + 标题 + 开始按钮 + 免责声明。
+ * 首页 —— 参考站布局：顶栏 + 渐变大标题 + 8 个收藏盲盒方块 + 黑色 CTA + 免责 + 页脚。
  */
 export default function HomePage({ onStart }: HomePageProps) {
   const { t } = useLocale();
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-between overflow-hidden bg-gradient-to-br from-cyan-50 via-violet-50 to-emerald-50 px-6 py-12 text-slate-800">
-      {/* 背景装饰光斑 */}
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-cyan-300/30 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 rounded-full bg-violet-300/30 blur-3xl" />
-      <div className="pointer-events-none absolute left-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full bg-emerald-200/30 blur-3xl" />
+    <div className="flex min-h-screen flex-col bg-white">
+      <TopBanner />
 
-      {/* 顶部：品牌名 + 语言切换 */}
-      <div className="z-10 flex w-full max-w-sm items-center justify-between">
-        <div className="text-sm font-medium tracking-widest text-slate-500">
-          {t(appConfig.brandName)}
+      <main className="flex flex-1 flex-col items-center px-6 py-10 text-center">
+        {/* eyebrow */}
+        <div className="mb-4 rounded-full border border-slate-200 bg-slate-50 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-violet-600">
+          ✦ {appConfig.tagline}
         </div>
-        <LanguageToggle variant="light" />
-      </div>
 
-      {/* 主内容 */}
-      <div className="z-10 flex flex-col items-center text-center">
-        <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-3xl border border-white/60 bg-white/50 text-6xl shadow-xl shadow-cyan-500/10 backdrop-blur-md">
-          <span className="animate-float drop-shadow-sm">🧬</span>
-        </div>
-        <div className="mb-3 rounded-full border border-cyan-200/70 bg-white/60 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-cyan-600 backdrop-blur">
-          {t(appConfig.tagline)}
-        </div>
-        <h1 className="bg-gradient-to-r from-cyan-600 via-violet-600 to-emerald-600 bg-clip-text text-3xl font-extrabold leading-tight tracking-tight text-transparent sm:text-4xl">
+        {/* 主标题 */}
+        <h1 className="bg-gradient-to-r from-fuchsia-600 via-violet-600 to-cyan-500 bg-clip-text text-3xl font-black leading-tight tracking-tight text-transparent sm:text-5xl">
           {t(appConfig.title)}
         </h1>
-        <p className="mt-4 max-w-xs text-base leading-relaxed text-slate-500">
+        <p className="mt-3 max-w-md text-[15px] leading-relaxed text-slate-500">
           {t(appConfig.subtitle)}
         </p>
-      </div>
 
-      {/* 底部按钮 + 免责声明 */}
-      <div className="z-10 flex w-full max-w-sm flex-col items-center gap-5">
+        {/* 8 个收藏盲盒方块 */}
+        <div className="mt-8 grid w-full max-w-md grid-cols-4 gap-3">
+          {results.map((r) => (
+            <div
+              key={r.code}
+              className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br ${r.gradient} shadow-sm transition hover:-translate-y-1 hover:shadow-lg`}
+            >
+              <div className="pointer-events-none absolute -right-3 -top-3 h-10 w-10 rounded-full bg-white/30 blur-md" />
+              <span className="relative text-3xl drop-shadow-sm">{r.emoji}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* 黑色 CTA */}
         <button
           type="button"
           onClick={onStart}
-          className="w-full rounded-full bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 py-4 text-lg font-bold text-white shadow-xl shadow-cyan-500/30 transition-all duration-200 hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98]"
+          className="mt-8 w-full max-w-md rounded-full bg-slate-900 py-4 text-lg font-bold text-white shadow-xl shadow-slate-900/20 transition-all duration-200 hover:scale-[1.01] hover:bg-slate-800 active:scale-[0.98]"
         >
-          {t(appConfig.startButtonText)}
+          🚀 {t(appConfig.startButtonText)}
         </button>
-        <p className="px-4 text-center text-xs leading-relaxed text-slate-400">
-          {t(appConfig.disclaimer)}
+
+        {/* 短免责 */}
+        <p className="mt-5 max-w-md text-xs leading-relaxed text-slate-400">
+          {t(appConfig.shortDisclaimer)}
         </p>
-      </div>
+      </main>
+
+      <SiteFooter />
     </div>
   );
 }

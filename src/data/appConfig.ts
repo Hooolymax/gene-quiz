@@ -1,101 +1,117 @@
 import type { Localized } from '../types/quiz';
 
 /**
- * 应用级文案 / 品牌配置（多语言）
+ * 应用级文案 / 品牌配置（中英并列展示）—— 世界杯基因人格测试
  * ----------------------------------------------------------------------------
- * 所有面向用户的文案用 { zh, en } 包一层；href / gradient 与语言无关。
- * 用法：const { t } = useLocale(); t(appConfig.title)
- * 扩展点（品牌定制）：未来可在此加入 logo、主色、客服二维码等。
+ * 参考站布局：全站中英文同时显示（无语言切换）。文案仍用 { zh, en } 存，组件里两种都渲染。
+ * href 与语言无关。
  */
 export const appConfig = {
-  /** 品牌名（页眉/页脚展示） */
-  brandName: {
-    zh: 'EboVir · 身体年轻力实验室',
-    en: 'EboVir · Body Age Lab',
-  } as Localized,
+  /** 品牌名（顶栏左侧） */
+  brandName: 'EBOVIR × EBOGENES',
+  /** 顶栏右侧站点名 */
+  siteName: 'World Cup DNA Lab',
+  /** 页脚版权 */
+  copyright: 'EBOVIR × EBOGENES © 2026',
+
+  /** 首页标题上方的小标签（eyebrow） */
+  tagline: 'Powered by EBOVIR × EBOGENES',
 
   /** 首页主标题 */
   title: {
-    zh: '测测你的身体年轻力人格',
-    en: 'Body Age Profile Test',
-  } as Localized,
-
-  /** 首页标题上方的小标签（eyebrow） */
-  tagline: {
-    zh: 'Body Age Profile Test',
-    en: 'A 2-minute body-age personality test',
+    zh: '测测你的世界杯基因人格',
+    en: "What's Your World Cup DNA?",
   } as Localized,
 
   /** 首页副标题 */
   subtitle: {
-    zh: '用 2 分钟了解你的运动、皮肤、恢复、饮食和健康管理倾向。',
-    en: 'In 2 minutes, discover your tendencies across exercise, skin, recovery, diet and health management.',
+    zh: '8 道题，解锁你的专属球员人格盲盒。',
+    en: '8 questions. 8 collectible archetypes. Pure fun.',
   } as Localized,
 
   /** 开始按钮文案 */
-  startButtonText: { zh: '开始测试', en: 'Start Test' } as Localized,
+  startButtonText: { zh: '开始测试', en: 'Start the Quiz' } as Localized,
 
   /** 结果页 Hero 上方的小标题 */
   resultLabel: {
-    zh: '你的身体年轻力人格',
-    en: 'Your Body Age Profile',
+    zh: '你的基因人格',
+    en: 'Your World Cup DNA',
   } as Localized,
 
-  /** 免责声明（首页 + 结果页都会展示） */
+  /** 收藏款角标 */
+  collectibleLabel: {
+    zh: '限定收藏款',
+    en: 'Limited Collectible',
+  } as Localized,
+
+  /** 短免责声明（首页 CTA 下方） */
+  shortDisclaimer: {
+    zh: '仅供娱乐，不构成医学或基因建议。',
+    en: 'For entertainment only. No medical or genetic advice.',
+  } as Localized,
+
+  /** 完整免责声明（首页 + 结果页页脚） */
   disclaimer: {
-    zh: '本测试为趣味互动内容，不代表医学建议、诊断结论或真实基因检测结果。',
-    en: 'This test is for fun and engagement only. It is not medical advice, a diagnosis, or a real genetic testing result.',
+    zh: '本测试仅供娱乐与科普启发使用，不构成医学建议、健康评估、基因诊断或治疗依据。',
+    en: 'This experience is intended for entertainment and educational inspiration only. It does not provide medical advice, health assessment, genetic diagnosis, or treatment recommendations.',
   } as Localized,
 
-  /** 分享文案模板（{code} {name} {slogan} 会被替换） */
-  shareTemplate: {
-    zh: '我的身体年轻力人格是 {code} {name}！{slogan} 快来测测你的 →',
-    en: 'My Body Age Profile is {code} {name}! {slogan} Take the test →',
-  } as Localized,
+  /** 结果页底部「EBOVIR × EBOGENES 探索区」文案 */
+  ending: {
+    title: {
+      zh: '🔬 原来，每个人的潜力都不一样。',
+      en: '🔬 What if your potential is uniquely yours?',
+    } as Localized,
+    intro: {
+      zh: '这个测试的灵感，来自正在兴起的研究——人们在很多方面可能天生不同：',
+      en: 'This experience was inspired by emerging research exploring how people may differ in areas such as:',
+    } as Localized,
+    bullets: {
+      zh: ['恢复与适应', '能量代谢', '抗压能力', '决策倾向', '运动表现潜力'],
+      en: [
+        'Recovery and adaptation',
+        'Energy metabolism',
+        'Stress resilience',
+        'Decision-making tendencies',
+        'Physical performance potential',
+      ],
+    } as Localized<string[]>,
+    closing: {
+      zh: '它的意义，不是给你贴上限制的标签，而是庆祝每个人的独特。每个人都有属于自己的优势。真正重要的，不是和别人一样，而是发现最适合自己的潜力。',
+      en: "The goal isn't to label limitations. It's to celebrate human uniqueness. Everyone has their own strengths — what matters isn't being like others, but discovering the potential that's uniquely yours.",
+    } as Localized,
+    aboutTitle: {
+      zh: '关于 EBOGENES',
+      en: 'About EBOGENES',
+    } as Localized,
+    aboutBody: {
+      zh: 'EBOGENES 是 EBOVIR 旗下的创新项目，探索基因、健康、运动表现与人类潜力之间迷人的交汇点，让科学启发帮助人们更好地认识自己。',
+      en: 'EBOGENES is an innovation initiative by EBOVIR that explores the fascinating intersection of genetics, wellness, performance, and human potential. Discover how science-inspired insights may help people better understand themselves.',
+    } as Localized,
+  },
 
   /**
-   * 结果页底部 3 个 CTA 卡片。
-   * href 为正式外链（新标签页打开）；title / description / buttonText 多语言。
+   * 结果页 3 个公司 CTA（均为正式外链，新标签页打开）。
+   * 保留最初版本的三个公司页面：EBOGENES / EBOSCIENCE / AI Genetic Consultant。
    */
   ctas: [
     {
-      title: {
-        zh: '查看我的 EboScience 外在护理建议',
-        en: 'See my EboScience skincare guidance',
-      } as Localized,
-      description: {
-        zh: '探索皮肤状态管理、修复护理和抗老相关产品方向。',
-        en: 'Explore product directions for skin-condition management, repair care and anti-aging.',
-      } as Localized,
-      buttonText: { zh: '查看 EboScience', en: 'Explore EboScience' } as Localized,
-      href: 'https://eboscience.com/',
-      gradient: 'from-cyan-500 to-teal-500',
-    },
-    {
-      title: {
-        zh: '了解 EboGenes 基因检测服务',
-        en: 'Learn about EboGenes genetic testing',
-      } as Localized,
-      description: {
-        zh: '通过基因检测进一步了解营养、代谢、健康风险和身体管理相关信息。',
-        en: 'Use genetic testing to learn more about nutrition, metabolism, health risks and body management.',
-      } as Localized,
-      buttonText: { zh: '了解 EboGenes', en: 'Learn about EboGenes' } as Localized,
+      emoji: '🔬',
+      label: { zh: '探索 EBOGENES', en: 'Explore EBOGENES' } as Localized,
       href: 'https://ebogenes.com/',
       gradient: 'from-violet-500 to-indigo-500',
     },
     {
-      title: {
-        zh: '体验 AI Genetic Consultant',
-        en: 'Try the AI Genetic Consultant',
-      } as Localized,
-      description: {
-        zh: '上传或连接检测信息，获得更个性化的基因解读和健康管理建议。',
-        en: 'Upload or connect your test data for a more personalized genetic read and health guidance.',
-      } as Localized,
-      buttonText: { zh: '体验 AI Consultant', en: 'Try AI Consultant' } as Localized,
+      emoji: '🧬',
+      label: { zh: '了解 EBOSCIENCE', en: 'Explore EBOSCIENCE' } as Localized,
+      href: 'https://eboscience.com/',
+      gradient: 'from-cyan-500 to-teal-500',
+    },
+    {
+      emoji: '🤖',
+      label: { zh: '体验 AI Genetic Consultant', en: 'Try AI Genetic Consultant' } as Localized,
       href: 'https://www.e-ai.ca/',
-      gradient: 'from-fuchsia-500 to-purple-500',
+      gradient: 'from-fuchsia-500 to-pink-500',
     },
   ],
 };

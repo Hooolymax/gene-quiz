@@ -1,518 +1,245 @@
 import type { Question } from '../types/quiz';
 
 /**
- * 题库配置（示例 12 题，每题 4 个选项，中英双语）
+ * 题库 —— 世界杯基因人格测试（8 题，每题 4 个选项，中英双语）
  * ----------------------------------------------------------------------------
- * 维度速查：
- *   P 表现驱动 / R 恢复修复 ｜ S 皮肤状态 / B 身体代谢 ｜
- *   A 主动管理 / N 自然随缘 ｜ T 科技检测 / C 日常护理
+ * 原型速查：ROCKET 冲锋狗 / ENGINE 永动机 / PLAYMAKER 球场军师 / ICEMAN 大心脏 /
+ *          PHOENIX 逆转凤凰 / ANALYST 数据怪人 / IRON 铁人 / CHAOS 快乐足球家
  *
- * 题目主题均匀覆盖：运动表现、睡眠恢复、皮肤抗老、饮食营养、健康风险意识、科技检测接受度。
- * 文案用 { zh, en } 双语；score 与语言无关，可同时给多个维度加分，例如 { T: 2, A: 1 }。
- * 计分逻辑见 src/utils/calculateResult.ts —— 不依赖题目数量，加减题目无需改代码。
+ * score 为加权打分（可同时给多个原型），刻意做成多对多映射，避免「选 A 就是某结果」。
+ * 权重经全量组合（4^8=65536）校准，8 个原型分布尽量均衡、都可达。
+ * 计分逻辑见 src/utils/calculateResult.ts —— 取最高分原型，并列按顺序兜底。
  */
 export const questions: Question[] = [
-  // —— 运动表现 ——
   {
     id: 1,
     title: {
-      zh: '说到运动，你最看重的是？',
-      en: 'When it comes to exercise, what matters most to you?',
+      zh: '世界杯决赛第89分钟，教练只能给你一个BUFF，你选？',
+      en: "It's the 89th minute of the World Cup Final. Your coach can only upgrade one ability.",
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '突破极限、看到表现和成绩在进步',
-          en: 'Pushing limits and seeing my performance improve',
-        },
-        score: { P: 2, A: 1 },
+        text: { zh: '⚡ 冲刺速度翻倍，谁都追不上我', en: '⚡ Lightning Speed' },
+        score: { ROCKET: 2 },
       },
       {
         id: 'b',
-        text: {
-          zh: '动得舒服、不累着自己，重在放松',
-          en: 'Moving comfortably and staying relaxed, never overdoing it',
-        },
-        score: { R: 2, N: 1 },
+        text: { zh: '🔋 体力无限，再踢90分钟都行', en: '🔋 Endless Stamina' },
+        score: { ENGINE: 2 },
       },
       {
         id: 'c',
-        text: {
-          zh: '跟着训练数据和心率区间科学安排',
-          en: 'Training scientifically with data and heart-rate zones',
-        },
-        score: { P: 1, T: 2 },
+        text: { zh: '🧠 看穿对手下一步动作', en: '🧠 Elite Focus' },
+        score: { PLAYMAKER: 2, ANALYST: 1 },
       },
       {
         id: 'd',
-        text: {
-          zh: '保持规律就好，强度顺其自然',
-          en: 'Just staying consistent — I let the intensity flow naturally',
-        },
-        score: { R: 1, C: 1, N: 1 },
+        text: { zh: '🏥 比赛结束马上满血复活', en: '🏥 Fast Recovery' },
+        score: { IRON: 2, PHOENIX: 1 },
       },
     ],
   },
-  // —— 睡眠恢复 ——
   {
     id: 2,
     title: {
-      zh: '高强度的一天之后，你通常会？',
-      en: 'After an intense day, you usually…',
+      zh: '点球大战开始前，你最像哪种人？',
+      en: 'Penalty shootout. Which one are you?',
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '安排拉伸、泡澡、按摩，认真帮身体恢复',
-          en: 'Stretch, soak or get a massage — I take recovery seriously',
-        },
-        score: { R: 2, A: 1 },
+        text: { zh: '😎 我第一个上，越刺激越兴奋', en: '😎 Let me go first.' },
+        score: { ROCKET: 2, CHAOS: 1 },
       },
       {
         id: 'b',
-        text: {
-          zh: '照常作息，身体自己会缓过来',
-          en: 'Keep my usual routine — my body bounces back on its own',
-        },
-        score: { N: 2, R: 1 },
+        text: { zh: '🧊 最后一球给我，我扛得住', en: "🧊 I'll take the final shot." },
+        score: { ICEMAN: 2 },
       },
       {
         id: 'c',
-        text: {
-          zh: '用手环看睡眠和恢复评分再决定怎么调整',
-          en: "Check my wearable's sleep and recovery scores, then adjust",
-        },
-        score: { T: 2, R: 1 },
+        text: { zh: '📊 等等，我先研究门将习惯', en: '📊 Show me the statistics first.' },
+        score: { ANALYST: 2, PLAYMAKER: 1 },
       },
       {
         id: 'd',
-        text: {
-          zh: '不太在意恢复，第二天接着冲',
-          en: "Don't think much about recovery — I go again the next day",
-        },
-        score: { P: 2 },
+        text: { zh: '📣 我负责稳住全队气氛', en: "📣 I'll support the team." },
+        score: { CHAOS: 1, ENGINE: 1 },
       },
     ],
   },
-  // —— 皮肤抗老 ——
   {
     id: 3,
     title: {
-      zh: '你对皮肤状态的关注程度是？',
-      en: 'How much attention do you give your skin?',
+      zh: '朋友约你踢球迟到了30分钟，你会？',
+      en: 'Your friends are 30 minutes late to the match. What do you do?',
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '很关注，护肤、防晒、抗老一样不落',
-          en: 'A lot — skincare, sun protection and anti-aging, all covered',
-        },
-        score: { S: 2, A: 1 },
+        text: { zh: '🤪 自己开始玩花式足球', en: '🤪 Practice tricks for fun.' },
+        score: { CHAOS: 2, ROCKET: 1 },
       },
       {
         id: 'b',
-        text: {
-          zh: '基础清洁保湿即可，顺其自然',
-          en: 'Just basic cleansing and moisturizing — I keep it natural',
-        },
-        score: { N: 2, C: 1 },
+        text: { zh: '🏃 先跑几圈热热身', en: '🏃 Go for extra training.' },
+        score: { ENGINE: 2, IRON: 1 },
       },
       {
         id: 'c',
-        text: {
-          zh: '更在意身体内在状态，皮肤其次',
-          en: 'I care more about how my body feels inside; skin is secondary',
-        },
-        score: { B: 2 },
+        text: { zh: '🍔 正好，先去找点吃的', en: '🍔 Grab something to eat.' },
+        score: { IRON: 1, CHAOS: 1 },
       },
       {
         id: 'd',
-        text: {
-          zh: '会研究成分和检测，挑有依据的方案',
-          en: 'I research ingredients and data to pick evidence-based options',
-        },
-        score: { S: 1, T: 2 },
+        text: { zh: '📱 顺便研究一下战术', en: '📱 Analyze today’s strategy.' },
+        score: { ANALYST: 2, PLAYMAKER: 1 },
       },
     ],
   },
-  // —— 饮食营养 ——
   {
     id: 4,
     title: {
-      zh: '面对每天的饮食，你的方式更接近？',
-      en: 'Which best describes your approach to daily eating?',
+      zh: '如果运动天赋能抽SSR，你最想抽到什么？',
+      en: 'If sports talent came as an SSR card, what would you choose?',
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '按营养比例和热量规划，主动管理',
-          en: 'I plan macros and calories — I manage it actively',
-        },
-        score: { B: 1, A: 2 },
+        text: { zh: '⚡ 爆发力', en: '⚡ Explosive Power' },
+        score: { ROCKET: 2 },
       },
       {
         id: 'b',
-        text: {
-          zh: '想吃就吃，凭感觉和心情',
-          en: 'I eat what I feel like, by mood and instinct',
-        },
-        score: { N: 2 },
+        text: { zh: '🫀 超强耐力', en: '🫀 Elite Endurance' },
+        score: { ENGINE: 2 },
       },
       {
         id: 'c',
-        text: {
-          zh: '关注对皮肤、抗老有帮助的食物',
-          en: 'I favor foods that support skin and a youthful look',
-        },
-        score: { S: 2, C: 1 },
+        text: { zh: '🧠 顶级球商', en: '🧠 Tactical Intelligence' },
+        score: { PLAYMAKER: 2 },
       },
       {
         id: 'd',
-        text: {
-          zh: '更在意代谢、血糖和身体内在指标',
-          en: 'I focus on metabolism, blood sugar and internal markers',
-        },
-        score: { B: 2, T: 1 },
+        text: { zh: '🏥 超快恢复', en: '🏥 Recovery Ability' },
+        score: { PHOENIX: 2, IRON: 1 },
       },
     ],
   },
-  // —— 健康风险意识 ——
   {
     id: 5,
     title: {
-      zh: '对于潜在的健康风险，你的态度是？',
-      en: "What's your attitude toward potential health risks?",
+      zh: '世界杯夺冠后，你第一件事会做什么？',
+      en: "Your team just won the World Cup. What's your first move?",
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '提前了解、主动预防，越早越好',
-          en: 'Learn early and prevent proactively — the sooner the better',
-        },
-        score: { A: 2, T: 1 },
+        text: { zh: '🕺 冲上看台庆祝', en: '🕺 Celebrate wildly.' },
+        score: { CHAOS: 2, ROCKET: 1 },
       },
       {
         id: 'b',
-        text: {
-          zh: '有明显不适再处理，平时不太担心',
-          en: "I deal with it only when something's clearly off",
-        },
-        score: { N: 2 },
+        text: { zh: '📸 发朋友圈和小红书', en: '📸 Post it everywhere.' },
+        score: { CHAOS: 1 },
       },
       {
         id: 'c',
-        text: {
-          zh: '靠规律作息和日常护理慢慢调养',
-          en: 'I rely on a steady routine and daily care to stay balanced',
-        },
-        score: { C: 2, R: 1 },
+        text: { zh: '😭 安静坐着消化情绪', en: '😭 Take it all in quietly.' },
+        score: { ICEMAN: 2, PHOENIX: 1 },
       },
       {
         id: 'd',
-        text: {
-          zh: '希望用检测和数据看清自己的情况',
-          en: "I'd rather use testing and data to see my situation clearly",
-        },
-        score: { T: 2, A: 1 },
+        text: { zh: '🍜 终于可以狠狠干饭了', en: '🍜 Eat like a champion.' },
+        score: { IRON: 2, ENGINE: 1 },
       },
     ],
   },
-  // —— 科技检测接受度 ——
   {
     id: 6,
     title: {
-      zh: '我更愿意通过数据、检测或报告了解身体状态。',
-      en: "I'd rather understand my body through data, tests and reports.",
+      zh: '如果不当球员，你更适合？',
+      en: "If you weren't a player, what role would fit you best?",
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '非常认同，越量化越安心',
-          en: 'Strongly agree — the more quantified, the more reassured I feel',
-        },
-        score: { T: 2, A: 1 },
+        text: { zh: '🎤 热血队长', en: '🎤 Motivational Captain' },
+        score: { PLAYMAKER: 2, ROCKET: 1 },
       },
       {
         id: 'b',
-        text: {
-          zh: '感觉比数据更重要，凭身体反应判断',
-          en: 'Feeling matters more than data — I go by how my body responds',
-        },
-        score: { C: 2, N: 1 },
+        text: { zh: '📈 数据分析师', en: '📈 Data Analyst' },
+        score: { ANALYST: 2 },
       },
       {
         id: 'c',
-        text: {
-          zh: '检测可以参考，但更信任日常护理习惯',
-          en: 'Tests are a reference, but I trust daily care habits more',
-        },
-        score: { C: 2, T: 1 },
+        text: { zh: '🩺 队医与恢复专家', en: '🩺 Recovery Specialist' },
+        score: { PHOENIX: 2, IRON: 1 },
       },
       {
         id: 'd',
-        text: {
-          zh: '愿意尝试基因/体征检测来优化表现',
-          en: 'Happy to try genetic or biometric testing to optimize performance',
-        },
-        score: { T: 2, P: 1 },
+        text: { zh: '🎭 吉祥物兼气氛担当', en: '🎭 Team Mascot' },
+        score: { CHAOS: 2 },
       },
     ],
   },
-  // —— 运动表现 ——
   {
     id: 7,
     title: {
-      zh: '理想中的运动状态是？',
-      en: 'Your ideal physical state is…',
+      zh: '比赛输了以后，你通常会……',
+      en: 'After losing a match, you usually...',
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '更强、更快、更有力量的自己',
-          en: 'A stronger, faster, more powerful me',
-        },
-        score: { P: 2, A: 1 },
+        text: { zh: '🔥 不服，再来一场', en: '🔥 Ask for a rematch.' },
+        score: { PHOENIX: 2, ROCKET: 1 },
       },
       {
         id: 'b',
-        text: {
-          zh: '身体轻盈、恢复快、少酸痛',
-          en: 'Feeling light, recovering fast, with little soreness',
-        },
-        score: { R: 2, B: 1 },
+        text: { zh: '🧊 冷静复盘哪里出问题', en: '🧊 Review what went wrong.' },
+        score: { ANALYST: 2, ICEMAN: 1 },
       },
       {
         id: 'c',
-        text: {
-          zh: '皮肤气色和身材线条都更好看',
-          en: 'Better skin, complexion and body lines',
-        },
-        score: { S: 2 },
+        text: { zh: '🤷 开心最重要', en: '🤷 Move on and enjoy life.' },
+        score: { CHAOS: 2 },
       },
       {
         id: 'd',
-        text: {
-          zh: '代谢稳定、精力充沛、状态在线',
-          en: 'Steady metabolism, plenty of energy, always on form',
-        },
-        score: { B: 2, R: 1 },
+        text: { zh: '😴 先恢复状态再说', en: '😴 Rest and recharge.' },
+        score: { IRON: 2, ENGINE: 1 },
       },
     ],
   },
-  // —— 睡眠恢复 ——
   {
     id: 8,
     title: {
-      zh: '关于睡眠，你更像哪一种？',
-      en: 'When it comes to sleep, which are you?',
+      zh: '如果EBOVIR实验室能告诉你一个隐藏潜力，你最想知道？',
+      en: 'If the EBOVIR Lab could reveal one hidden potential, what would you want to know?',
     },
     options: [
       {
         id: 'a',
-        text: {
-          zh: '把睡眠当成头等大事，主动优化作息',
-          en: 'I treat sleep as a top priority and actively optimize my routine',
-        },
-        score: { A: 2, R: 1 },
+        text: { zh: '⚡ 我的速度与爆发潜力？', en: '⚡ My speed and power potential.' },
+        score: { ROCKET: 2 },
       },
       {
         id: 'b',
-        text: {
-          zh: '困了就睡，随性而稳定',
-          en: 'I sleep when tired — easygoing but steady',
-        },
-        score: { N: 2, R: 1 },
+        text: { zh: '🫀 我的耐力与恢复能力？', en: '🫀 My endurance and recovery profile.' },
+        score: { ENGINE: 2, IRON: 1 },
       },
       {
         id: 'c',
-        text: {
-          zh: '用设备追踪睡眠质量并据此调整',
-          en: 'I track sleep quality with a device and adjust accordingly',
-        },
-        score: { T: 2, A: 1 },
+        text: { zh: '🧠 我的专注与决策优势？', en: '🧠 My focus and decision strengths.' },
+        score: { PLAYMAKER: 2, ANALYST: 1 },
       },
       {
         id: 'd',
-        text: {
-          zh: '靠泡脚、香薰、护理仪式帮助入睡',
-          en: 'I wind down with foot soaks, aromas and little care rituals',
-        },
-        score: { C: 2, S: 1 },
-      },
-    ],
-  },
-  // —— 皮肤抗老 ——
-  {
-    id: 9,
-    title: {
-      zh: '看到「抗老」相关的话题，你会？',
-      en: "When you come across 'anti-aging' topics, you…",
-    },
-    options: [
-      {
-        id: 'a',
-        text: {
-          zh: '立刻关注，想了解最新的护理方向',
-          en: 'Tune in right away — I want the latest care directions',
-        },
-        score: { S: 2, A: 1 },
-      },
-      {
-        id: 'b',
-        text: {
-          zh: '更想知道身体内在的衰老和代谢信号',
-          en: 'Am more curious about internal aging and metabolic signals',
-        },
-        score: { B: 2, T: 1 },
-      },
-      {
-        id: 'c',
-        text: {
-          zh: '顺其自然，保持心态年轻最重要',
-          en: 'Take it easy — staying young at heart matters most',
-        },
-        score: { N: 2 },
-      },
-      {
-        id: 'd',
-        text: {
-          zh: '坚持日常护理和防晒，稳扎稳打',
-          en: 'Stick to daily care and sun protection, step by step',
-        },
-        score: { C: 2, S: 1 },
-      },
-    ],
-  },
-  // —— 饮食营养 ——
-  {
-    id: 10,
-    title: {
-      zh: '挑选保健或营养补充时，你会？',
-      en: 'When choosing supplements or nutrition, you…',
-    },
-    options: [
-      {
-        id: 'a',
-        text: {
-          zh: '研究成分和数据，按需求精准补充',
-          en: 'Research ingredients and data, supplementing precisely to need',
-        },
-        score: { T: 2, A: 1 },
-      },
-      {
-        id: 'b',
-        text: {
-          zh: '吃天然食物为主，不太依赖额外补充',
-          en: 'Mostly eat whole foods and rarely rely on extra supplements',
-        },
-        score: { N: 2, C: 1 },
-      },
-      {
-        id: 'c',
-        text: {
-          zh: '挑对皮肤、气色有帮助的',
-          en: 'Pick what helps skin and complexion',
-        },
-        score: { S: 2 },
-      },
-      {
-        id: 'd',
-        text: {
-          zh: '关注代谢、肠道和身体内在平衡',
-          en: 'Focus on metabolism, gut and internal balance',
-        },
-        score: { B: 2 },
-      },
-    ],
-  },
-  // —— 健康风险意识 ——
-  {
-    id: 11,
-    title: {
-      zh: '如果有一份关于你身体的个性化报告，你最想看？',
-      en: "If you had a personalized report about your body, you'd most want to see…",
-    },
-    options: [
-      {
-        id: 'a',
-        text: {
-          zh: '运动表现和体能潜力相关的部分',
-          en: 'The parts about athletic performance and fitness potential',
-        },
-        score: { P: 2, T: 1 },
-      },
-      {
-        id: 'b',
-        text: {
-          zh: '皮肤、抗老和外在状态相关的部分',
-          en: 'The parts about skin, anti-aging and outward condition',
-        },
-        score: { S: 2, A: 1 },
-      },
-      {
-        id: 'c',
-        text: {
-          zh: '营养、代谢和健康管理相关的部分',
-          en: 'The parts about nutrition, metabolism and health management',
-        },
-        score: { B: 2, A: 1 },
-      },
-      {
-        id: 'd',
-        text: {
-          zh: '恢复、压力和生活方式相关的部分',
-          en: 'The parts about recovery, stress and lifestyle',
-        },
-        score: { R: 2, C: 1 },
-      },
-    ],
-  },
-  // —— 科技检测接受度 ——
-  {
-    id: 12,
-    title: {
-      zh: '测完这套题，你最希望得到？',
-      en: 'After this quiz, what would you most like to get?',
-    },
-    options: [
-      {
-        id: 'a',
-        text: {
-          zh: '一份能帮我科学管理身体的方向建议',
-          en: 'Guidance to help me manage my body scientifically',
-        },
-        score: { A: 2, T: 1 },
-      },
-      {
-        id: 'b',
-        text: {
-          zh: '一个轻松有趣、能分享的人格标签',
-          en: 'A fun, shareable personality label',
-        },
-        score: { N: 2, C: 1 },
-      },
-      {
-        id: 'c',
-        text: {
-          zh: '关于皮肤与外在护理的灵感',
-          en: 'Inspiration for skin and external care',
-        },
-        score: { S: 2 },
-      },
-      {
-        id: 'd',
-        text: {
-          zh: '关于营养代谢与内在管理的灵感',
-          en: 'Inspiration for nutrition, metabolism and internal care',
-        },
-        score: { B: 2 },
+        text: { zh: '💪 我的抗压与适应能力？', en: '💪 My resilience and adaptability.' },
+        score: { ICEMAN: 2, PHOENIX: 1 },
       },
     ],
   },

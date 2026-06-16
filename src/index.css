@@ -22,3 +22,29 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* 结果页彩带下落动画（Confetti 组件用） */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* 收藏角色轻微漂浮 */
+@keyframes char-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+.animate-char-float {
+  animation: char-float 4s ease-in-out infinite;
+}
